@@ -24,6 +24,7 @@ class Machine(list):
         elif self.number == 2:
             start_time = 0
             punishment = 0
+            m = 0
             for task in self:
                 if type(task) is Task:
                     start_time = max(start_time,
@@ -36,7 +37,9 @@ class Machine(list):
                     punishment += 10
                 elif type(task) is Maintenance:
                     punishment = 0
+                    self.params["m"+str(m)] = (start_time, task.length, task.length)
                     start_time += task.length
+                    m += 1
                 else:
                     raise TypeError("The object in Machine ordering list is not Task nor Maintenance.")
         return self.score

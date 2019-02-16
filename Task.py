@@ -16,3 +16,6 @@ class Task:
 
     def __eq__(self, other):
         return type(other) is Task and self.job.number == other.job.number and self.length == other.length
+
+    def __str__(self):
+        return "o{}_{}".format(1+int(self == self.job.task2), self.job.number)

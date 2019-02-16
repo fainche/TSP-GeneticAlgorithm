@@ -76,6 +76,28 @@ class Solution:
         s.score = self.score
         return s
 
+    def tofile(self, random_solution_time):
+        F = open("solutions/I{}.txt".format(self.number), "w")
+        F.writelines((self.instance.number, "{};{}".format(self.score, random_solution_time)))
+        F.write("M1: ")
+        F.write(' '.join("op1_{},{},{},{};".format(k, *v) for k, v in self.M1.params))
+        F.write("M@: ")
+        t, idles, idlestime, maints, maintstime = 0, 0, 0, 0, 0
+        for key, val in self.M2.params:
+            if t < val[0]:
+                idles += 1
+                F.write("idle{}_M2,{},{}".format(idles, t, val[0]-t))
+                idlestime += val[0]-t
+            if key.startswith("m"):
+                maints += 1
+                F.write("{}_M2,{},{};".format(key, *val))
+                maintstime += val[1]
+            else:
+                F.write("op2_{},{},{},{}".format(key, *val))
+        F.write("\n0,0;\n{},{};\n0,0;\n{},{};\n".format(maints, maintstime, idles, idlestime))
+
+        F.close()
+
     def __lt__(self, other):
         return self.score < other.score
 
