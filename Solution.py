@@ -106,4 +106,4 @@ class Solution:
             self.M1[i] == other.M1[i] and self.M2[i] == other.M2[i] for i in range(JOBS_NUMBER))
 
     def __hash__(self):
-        return self.score + int(''.join(map(str, self.M1.params.keys()))) + int(''.join(map(str, self.M2.params.keys())))
+        return self.score + int(''.join(map(str, self.M1.params.keys()))) + int(''.join(map(str, self.M2.params.keys())).replace("m", "0"))

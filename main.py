@@ -16,3 +16,4 @@ if __name__ == '__main__':
         p.ranking()
         p.cutoff()
     print(p[0].score)
+
