@@ -1,0 +1,7 @@
+MAX_TASK_TIME = 15
+
+MIN_TASK_TIME = 1
+
+JOBS_NUMBER = 5  # n z treści zadania
+
+MAX_MAINTENENANCE_TIME = 30
