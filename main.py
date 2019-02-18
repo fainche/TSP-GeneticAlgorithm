@@ -1,19 +1,10 @@
-from Instance import Instance
-from Population import Population
-from Solution import Solution
+from Tests import Tests
 
 if __name__ == '__main__':
-    i = Instance()
-    p = Population(i, 20, 25)
-    p.calculate()
-    p.ranking()
-    print(p[0].score)
-    for i in range(1000):
-        p.crossover()
-        p.calculate()
-        p.mutate(Solution.mutate4)
-        p.dedup()
-        p.ranking()
-        p.cutoff()
-    print(p[0].score)
-
+    t = Tests(100)
+    #t.test1()
+    #t.test2()
+    #t.test3()
+    #t.test4()
+    t.test5()
+    #t.test_crossover()

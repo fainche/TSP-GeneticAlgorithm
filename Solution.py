@@ -50,7 +50,7 @@ class Solution:
         self.M2[x], self.M2[y] = self.M2[y], self.M2[x]
         self.score = 0
 
-    def mutate2(self):  # swap random tasks on M1 and anther randoms tasks on M2
+    def mutate2(self):  # swap random tasks on M1 and other randoms tasks on M2
         r = tuple(randint(0, JOBS_NUMBER - 1) for _ in range(4))
         self.M1[r[0]], self.M1[r[1]] = self.M1[r[1]], self.M1[r[0]]
         self.M1[r[2]], self.M1[r[3]] = self.M1[r[3]], self.M1[r[2]]
@@ -68,6 +68,12 @@ class Solution:
         m[x], m[x + 1] = m[x + 1], m[x]
         self.score = 0
 
+    def mutate5(self): # swap random tasks on M1 or M2
+        m = (self.M1, self.M2)[randint(0, 1)]
+        x, y = randint(0, JOBS_NUMBER - 2), randint(0, JOBS_NUMBER - 2)
+        m[x], m[y] = m[y], m[x]
+        self.score = 0
+
     def copy(self):
         s = Solution()
         s.instance = self.instance
@@ -77,18 +83,18 @@ class Solution:
         return s
 
     def tofile(self, random_solution_time):
-        F = open("solutions/I{}.txt".format(self.number), "w")
-        F.writelines((self.instance.number, "{};{}".format(self.score, random_solution_time)))
+        F = open("solutions/I{}.txt".format(self.instance.number), "w")
+        F.writelines((str(self.instance.number), "{};{}".format(self.score, random_solution_time)))
         F.write("M1: ")
-        F.write(' '.join("op1_{},{},{},{};".format(k, *v) for k, v in self.M1.params))
+        F.write(' '.join("op1_{},{},{},{};".format(k, *v) for k, v in self.M1.params.items()))
         F.write("M@: ")
         t, idles, idlestime, maints, maintstime = 0, 0, 0, 0, 0
-        for key, val in self.M2.params:
+        for key, val in self.M2.params.items():
             if t < val[0]:
                 idles += 1
                 F.write("idle{}_M2,{},{}".format(idles, t, val[0]-t))
                 idlestime += val[0]-t
-            if key.startswith("m"):
+            if type(key) is str and key.startswith("m"):
                 maints += 1
                 F.write("{}_M2,{},{};".format(key, *val))
                 maintstime += val[1]

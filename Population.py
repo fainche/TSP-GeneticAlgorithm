@@ -6,6 +6,8 @@ from Solution import Solution
 class Population(list):
     def __init__(self, instance, size, maint_prob):
         super().__init__()
+        self.instance = instance
+        self.mait_prob = maint_prob
         self.size = size
         self.extend(Solution(instance, maint_prob) for _ in range(size))
 
@@ -50,3 +52,9 @@ class Population(list):
         s = set(self)
         self.clear()
         self.extend(s)
+
+    def copy(self):
+        p = Population(self.instance, 0, self.mait_prob)
+        p.size = self.size
+        p.extend(self)
+        return p
